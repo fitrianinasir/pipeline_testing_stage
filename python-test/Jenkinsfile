@@ -1,0 +1,33 @@
+pipeline {
+  agent none
+  stages {
+    stage('Build'){
+      agent{
+        docker{
+          image 'python:2-alpine' 
+        }
+      }
+      steps{
+        sh 'python -m py_compile python-test/add2vals.py python-test/calc.py'
+        stash(name: 'compilated-results', includes:'python-test/*.py')
+        sh 'ls -l python-test'
+      }
+    }
+    stage('Test'){
+      agent{
+        docker{
+          image 'qnib/pytest'
+        }
+      }
+      steps{
+        sh 'py.test --junit-xml test-reports/results.xml python-test/test_calc.py'
+        sh 'cat test-reports/result.xml'
+      }
+      post{
+        always{
+          junit 'test-reports/results.xml'
+        }
+      }
+    }
+  }
+}
