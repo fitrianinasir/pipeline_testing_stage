@@ -1,9 +1,9 @@
 pipeline {
   agent any
   stages{
-    stage('Dev Env'){
+    stage('UAT Env'){
       steps{
-        sh 'echo running dev env'
+        sh 'echo running UAT env'
       }
     }
   }
