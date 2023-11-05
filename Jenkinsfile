@@ -1,9 +1,9 @@
 pipeline {
   agent any
   stages{
-    stage('PROD Env'){
+    stage('Sandbox Env'){
       steps{
-        sh 'echo running PROD env'
+        sh 'echo running Sandbox env'
       }
     }
   }
