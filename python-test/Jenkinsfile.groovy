@@ -8,9 +8,9 @@ pipeline {
                 }
             }
             steps {
-                sh 'python -m py_compile python-test/add2vals.py python-test/calc.py'
-                stash(name: 'compiled-results', includes: 'python-test/*.py*')
-                sh 'ls -l python-test'
+                sh 'python -m py_compile pythoncode/add2vals.py pythoncode/calc.py'
+                stash(name: 'compiled-results', includes: 'pythoncode/*.py*')
+                sh 'ls -l pythoncode'
             }
         }
         stage('Test') { 
@@ -20,7 +20,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'py.test --junit-xml test-reports/results.xml python-test/test_calc.py' 
+                sh 'py.test --junit-xml test-reports/results.xml pythoncode/test_calc.py' 
                 sh 'cat test-reports/results.xml'
             }
             post {
